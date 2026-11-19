@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<title>نموذج تأكيد المقاسات</title>
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#f6f4ef">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="المقاسات">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" href="icon-192.png">
+<style>
+:root{--bg:#f6f4ef;--card:#fff;--tx:#1d1b16;--mu:#6b665b;--bd:#ddd8cb;--ac:#b4531f;--ac2:#fff;--ok:#1f7a4d;--dg:#b3261e;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#17150f;--card:#221f18;--tx:#f1ede3;--mu:#a49e8f;--bd:#3a3629;--ac:#e07a3f;--ac2:#17150f;--ok:#4cc38a;--dg:#ff8a80}}
+:root[data-theme="dark"]{--bg:#17150f;--card:#221f18;--tx:#f1ede3;--mu:#a49e8f;--bd:#3a3629;--ac:#e07a3f;--ac2:#17150f;--ok:#4cc38a;--dg:#ff8a80}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font-family:system-ui,-apple-system,"Segoe UI",Tahoma,Arial,sans-serif;line-height:1.5}
+.wrap{max-width:720px;margin:0 auto;padding:14px}
+h1{font-size:20px;margin:6px 0 2px}
+.sub{color:var(--mu);font-size:13px;margin:0 0 12px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:14px;margin-bottom:12px}
+h2{font-size:15px;margin:0 0 10px}
+label{display:block;font-size:13px;color:var(--mu);margin:8px 0 3px}
+input,select,textarea{width:100%;padding:10px;border:1px solid var(--bd);border-radius:10px;background:var(--bg);color:var(--tx);font:inherit;font-size:16px}
+textarea{min-height:64px;resize:vertical}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.g4{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.sp{border:1px dashed var(--bd);border-radius:12px;padding:10px;margin-bottom:10px}
+.sp .top{display:flex;gap:8px;align-items:center;justify-content:space-between}
+.sp .res{font-size:13px;color:var(--ok);margin-top:6px;font-weight:600}
+button{font:inherit;font-size:15px;border:0;border-radius:10px;padding:11px 14px;cursor:pointer;background:var(--ac);color:var(--ac2);font-weight:600}
+button.sec{background:transparent;color:var(--tx);border:1px solid var(--bd)}
+button.dg{background:transparent;color:var(--dg);border:1px solid var(--bd);padding:8px 10px;white-space:nowrap}
+button.sm{padding:7px 10px;font-size:13px}
+button.on{outline:2px solid var(--ac);background:var(--ac);color:var(--ac2)}
+.row{display:flex;gap:8px;flex-wrap:wrap}
+.row>button{flex:1;min-width:120px}
+.tot{font-size:15px;font-weight:700;color:var(--ok);margin-top:6px}
+canvas.sig{width:100%;height:150px;border:1px solid var(--bd);border-radius:10px;background:#fff;touch-action:none;display:block}
+.tb{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-bottom:8px}
+.dot{width:26px;height:26px;border-radius:50%;border:2px solid var(--bd);padding:0}
+.dot.on{outline:2px solid var(--tx);background-clip:padding-box}
+canvas.an{width:100%;height:auto;border:1px solid var(--bd);border-radius:10px;background:#fff;touch-action:none;display:block}
+.pend{display:flex;gap:6px;margin-top:8px}
+.pend[hidden]{display:none}
+.pend input{flex:1}
+.hint{font-size:12px;color:var(--mu);margin-top:6px}
+.item{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--bd);font-size:14px}
+.item:last-child{border:0}
+.item small{color:var(--mu);display:block}
+.toast{position:fixed;bottom:calc(16px + env(safe-area-inset-bottom,0px));left:50%;transform:translateX(-50%);background:var(--tx);color:var(--bg);padding:10px 16px;border-radius:20px;font-size:14px;display:none;z-index:9}
+input[type=file]{display:none}
+@media print{body{background:#fff;color:#000}.noprint{display:none!important}.card{border:1px solid #999;break-inside:avoid}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div style="text-align:center"><img src="logo.png" alt="ألوان الحياة" style="height:84px;max-width:100%;object-fit:contain;background:#fff;border-radius:10px;padding:4px"></div>
+<h1>نموذج تأكيد المقاسات والأبعاد</h1>
+<p class="sub">مؤسسة ألوان الحياة — يُحفظ على جهازك ويعمل بدون إنترنت</p>
+
+<div class="card">
+<h2>بيانات العميل والمشروع</h2>
+<div class="g2">
+<div><label>اسم العميل</label><input id="client"></div>
+<div><label>رقم الجوال</label><input id="phone" type="tel" inputmode="tel"></div>
+</div>
+<div class="g2">
+<div><label>نوع المشروع</label>
+<select id="ptype"><option>غرفة</option><option>محل</option><option>تصميم</option><option>شقة / فيلا</option><option>أخرى</option></select></div>
+<div><label>تاريخ المعاينة</label><input id="date" type="date"></div>
+</div>
+<label>الموقع / العنوان</label><input id="loc">
+<label>وحدة القياس</label>
+<select id="unit"><option value="m">متر</option><option value="cm">سنتيمتر</option></select>
+</div>
+
+<div class="card">
+<h2>الأماكن والمقاسات</h2>
+<div id="spaces"></div>
+<button class="sec noprint" id="addSp" type="button">＋ إضافة مكان</button>
+<div class="tot" id="tot"></div>
+</div>
+
+<div class="card">
+<h2>✏️ الكروكي (مخطط الأبعاد)</h2>
+<div id="sketch"></div>
+</div>
+
+<div class="card">
+<h2>📷 صور الموقع مع المقاسات</h2>
+<div id="photos"></div>
+<div class="row noprint">
+<button id="cam" type="button">📷 التقاط صورة</button>
+<button class="sec" id="gal" type="button">🖼️ من المعرض</button>
+</div>
+<input type="file" id="fcam" accept="image/*" capture="environment">
+<input type="file" id="fgal" accept="image/*" multiple>
+<div class="hint noprint">بعد إضافة الصورة اختر أداة «قياس»، اسحب خطًا بين نقطتين ثم اكتب المقاس.</div>
+</div>
+
+<div class="card">
+<h2>ملاحظات</h2>
+<textarea id="notes" placeholder="مثال: وجود أعمدة، فتحات، مواسير، مستوى الأرضية…"></textarea>
+</div>
+
+<div class="card">
+<h2>توقيع العميل على صحة المقاسات</h2>
+<canvas class="sig" id="sig"></canvas>
+<div class="row noprint" style="margin-top:8px"><button class="sec" id="clr" type="button">مسح التوقيع</button></div>
+</div>
+
+<div class="card noprint">
+<div class="row">
+<button id="save" type="button">💾 حفظ</button>
+<button class="sec" id="wa" type="button">إرسال واتساب</button>
+<button class="sec" id="pr" type="button">طباعة / PDF</button>
+<button class="sec" id="nw" type="button">نموذج جديد</button>
+</div>
+<div class="hint">واتساب يرسل ملخص المقاسات نصًا. لإرسال الكروكي والصور استخدم «طباعة / PDF».</div>
+</div>
+
+<div class="card noprint">
+<h2>النماذج المحفوظة</h2>
+<div id="list"></div>
+<div class="row" style="margin-top:10px"><button class="sec sm" id="bk" type="button">⬇️ نسخة احتياطية</button><button class="sec sm" id="rs" type="button">⬆️ استرجاع نسخة</button></div>
+<input type="file" id="frs" accept=".json,application/json">
+<div class="hint">احفظ نسخة احتياطية من حين لآخر في تطبيق «الملفات».</div>
+</div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+const $=id=>document.getElementById(id);
+const KEY="alwan-measure-forms";
+let curId=null;
+function toast(t){const e=$("toast");e.textContent=t;e.style.display="block";setTimeout(()=>e.style.display="none",2200)}
+function load(){try{return JSON.parse(localStorage.getItem(KEY))||[]}catch(e){return[]}}
+function store(a){try{localStorage.setItem(KEY,JSON.stringify(a));return true}catch(e){toast("المساحة ممتلئة — احذف نماذج قديمة أو قلل الصور");return false}}
+const n=v=>parseFloat(v)||0;
+const unitTxt=()=>$("unit").value==="cm"?"سم":"م";
+function twoTap(b,label,fn){if(b.dataset.arm){delete b.dataset.arm;b.textContent=label;fn()}else{b.dataset.arm=1;b.textContent="اضغط للتأكيد";setTimeout(()=>{if(b.dataset.arm){delete b.dataset.arm;b.textContent=label}},2500)}}
+
+/* ===== annotator (sketch + photos) ===== */
+function Annot(host,bgSrc,ops0){
+ const st={ops:ops0||[],tool:bgSrc?"dim":"rect",color:"#d32f2f",cur:null,pend:null,img:null};
+ const T=[["pen","✏️ قلم"],["rect","▭ مستطيل"],["dim","📏 قياس"],["txt","🔤 نص"]];
+ const C=["#d32f2f","#1565c0","#111111"];
+ host.innerHTML=`<div class="tb noprint">${T.map(t=>`<button type="button" class="sm sec" data-t="${t[0]}">${t[1]}</button>`).join("")}${C.map(c=>`<button type="button" class="dot" data-c="${c}" style="background:${c}"></button>`).join("")}<button type="button" class="sm sec" data-a="u">↩ تراجع</button><button type="button" class="sm dg" data-a="x">مسح</button></div><canvas class="an"></canvas><div class="pend noprint" hidden><input placeholder="اكتب المقاس، مثال: 3.5"><button type="button" class="sm" data-a="ok">إضافة</button><button type="button" class="sm sec" data-a="no">إلغاء</button></div>`;
+ const c=host.querySelector("canvas"),x=c.getContext("2d"),bar=host.querySelector(".pend"),inp=bar.querySelector("input"),xb=host.querySelector('[data-a="x"]');
+ function mark(){host.querySelectorAll("[data-t]").forEach(b=>b.classList.toggle("on",b.dataset.t===st.tool));host.querySelectorAll("[data-c]").forEach(b=>b.classList.toggle("on",b.dataset.c===st.color))}
+ function label(t,px,py,col){const fs=Math.max(18,c.width/30);x.font="bold "+fs+"px sans-serif";x.textAlign="center";x.textBaseline="middle";const w=x.measureText(t).width;x.fillStyle="rgba(255,255,255,.9)";x.fillRect(px-w/2-6,py-fs/2-4,w+12,fs+8);x.fillStyle=col;x.fillText(t,px,py)}
+ function op(o){
+  x.strokeStyle=x.fillStyle=o.c;x.lineWidth=Math.max(3,c.width/260);x.lineCap="round";x.lineJoin="round";
+  if(o.t==="pen"){x.beginPath();o.p.forEach((q,i)=>i?x.lineTo(q[0],q[1]):x.moveTo(q[0],q[1]));x.stroke()}
+  else if(o.t==="rect"){x.strokeRect(o.a[0],o.a[1],o.b[0]-o.a[0],o.b[1]-o.a[1])}
+  else if(o.t==="dim"){
+   x.beginPath();x.moveTo(o.a[0],o.a[1]);x.lineTo(o.b[0],o.b[1]);
+   const an=Math.atan2(o.b[1]-o.a[1],o.b[0]-o.a[0]),L=c.width/60,nx=-Math.sin(an)*L,ny=Math.cos(an)*L;
+   [o.a,o.b].forEach(q=>{x.moveTo(q[0]-nx,q[1]-ny);x.lineTo(q[0]+nx,q[1]+ny)});x.stroke();
+   if(o.txt)label(o.txt,(o.a[0]+o.b[0])/2,(o.a[1]+o.b[1])/2,o.c)}
+  else if(o.t==="txt"){if(o.txt)label(o.txt,o.p[0],o.p[1],o.c);else{x.beginPath();x.arc(o.p[0],o.p[1],6,0,7);x.fill()}}
+ }
+ function draw(){
+  x.fillStyle="#fff";x.fillRect(0,0,c.width,c.height);
+  if(st.img)x.drawImage(st.img,0,0);
+  else{x.strokeStyle="#e6e2d6";x.lineWidth=1;for(let i=0;i<=c.width;i+=50){x.beginPath();x.moveTo(i,0);x.lineTo(i,c.height);x.stroke()}for(let j=0;j<=c.height;j+=50){x.beginPath();x.moveTo(0,j);x.lineTo(c.width,j);x.stroke()}}
+  st.ops.forEach(op);if(st.cur)op(st.cur);if(st.pend)op(st.pend);
+ }
+ function size(w,h){c.width=w;c.height=h;draw()}
+ if(bgSrc){const i=new Image();i.onload=()=>{st.img=i;size(i.width,i.height)};i.src=bgSrc}else size(900,600);
+ const P=e=>{const r=c.getBoundingClientRect();return[(e.clientX-r.left)*c.width/r.width,(e.clientY-r.top)*c.height/r.height]};
+ function closeBar(){st.pend=null;bar.hidden=true;inp.value="";draw()}
+ c.addEventListener("pointerdown",e=>{
+  if(st.pend)closeBar();
+  const p=P(e);c.setPointerCapture(e.pointerId);
+  if(st.tool==="pen")st.cur={t:"pen",c:st.color,p:[p]};
+  else if(st.tool==="txt"){st.pend={t:"txt",c:st.color,p:p,txt:""};bar.hidden=false;inp.placeholder="اكتب النص أو المقاس";inp.focus();draw()}
+  else st.cur={t:st.tool,c:st.color,a:p,b:p};
+  draw();
+ });
+ c.addEventListener("pointermove",e=>{if(!st.cur)return;const p=P(e);if(st.cur.t==="pen")st.cur.p.push(p);else st.cur.b=p;draw()});
+ function up(){
+  const o=st.cur;if(!o)return;st.cur=null;
+  if(o.t==="pen"){if(o.p.length>1)st.ops.push(o)}
+  else{const d=Math.hypot(o.b[0]-o.a[0],o.b[1]-o.a[1]);if(d>15){if(o.t==="dim"){st.pend=o;bar.hidden=false;inp.placeholder="اكتب المقاس، مثال: 3.5";inp.focus()}else st.ops.push(o)}}
+  draw();
+ }
+ c.addEventListener("pointerup",up);c.addEventListener("pointercancel",()=>{st.cur=null;draw()});
+ function ok(){let v=inp.value.trim();if(!v||!st.pend)return;if(/^[\d.,٠-٩]+$/.test(v))v+=" "+unitTxt();st.pend.txt=v;st.ops.push(st.pend);closeBar()}
+ inp.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();ok()}});
+ host.addEventListener("click",e=>{
+  const b=e.target.closest("button");if(!b)return;
+  if(b.dataset.t){st.tool=b.dataset.t;mark()}
+  else if(b.dataset.c){st.color=b.dataset.c;mark()}
+  else if(b.dataset.a==="u"){closeBar();st.ops.pop();draw()}
+  else if(b.dataset.a==="x")twoTap(xb,"مسح",()=>{closeBar();st.ops=[];draw()});
+  else if(b.dataset.a==="ok")ok();
+  else if(b.dataset.a==="no")closeBar();
+ });
+ mark();
+ return{get:()=>st.ops,set:a=>{st.ops=a||[];draw()}};
+}
+
+/* ===== photos ===== */
+const photos=[];
+function addPhoto(src,ops){
+ const card=document.createElement("div");card.className="sp";
+ card.innerHTML=`<div class="top"><b>صورة</b><button class="dg noprint" type="button">حذف الصورة</button></div><div class="ah"></div>`;
+ const rec={src,a:Annot(card.querySelector(".ah"),src,ops)};photos.push(rec);
+ const b=card.querySelector(".dg");
+ b.onclick=()=>twoTap(b,"حذف الصورة",()=>{card.remove();photos.splice(photos.indexOf(rec),1)});
+ $("photos").appendChild(card);
+}
+function shrink(f){return new Promise(res=>{const fr=new FileReader();fr.onload=()=>{const i=new Image();i.onload=()=>{const s=Math.min(1,1000/Math.max(i.width,i.height)),cc=document.createElement("canvas");cc.width=Math.round(i.width*s);cc.height=Math.round(i.height*s);cc.getContext("2d").drawImage(i,0,0,cc.width,cc.height);res(cc.toDataURL("image/jpeg",.72))};i.src=fr.result};fr.readAsDataURL(f)})}
+async function pick(e){for(const f of e.target.files)addPhoto(await shrink(f));e.target.value=""}
+$("cam").onclick=()=>$("fcam").click();$("gal").onclick=()=>$("fgal").click();
+$("fcam").onchange=pick;$("fgal").onchange=pick;
+
+/* ===== spaces ===== */
+function addSpace(d){
+ d=d||{};
+ const el=document.createElement("div");el.className="sp";
+ el.innerHTML=`<div class="top"><input class="nm" placeholder="اسم المكان (مثال: غرفة النوم)" value="${(d.name||"").replace(/"/g,"&quot;")}"><button class="dg noprint" type="button">حذف</button></div>
+ <div class="g4"><div><label>الطول</label><input class="l" type="number" step="any" inputmode="decimal" value="${d.l||""}"></div>
+ <div><label>العرض</label><input class="w" type="number" step="any" inputmode="decimal" value="${d.w||""}"></div>
+ <div><label>الارتفاع</label><input class="h" type="number" step="any" inputmode="decimal" value="${d.h||""}"></div></div>
+ <div class="res"></div>`;
+ el.querySelector(".dg").onclick=()=>{el.remove();calc()};
+ el.addEventListener("input",calc);
+ $("spaces").appendChild(el);calc();
+}
+const toM=v=>$("unit").value==="cm"?v/100:v;
+function calc(){
+ let ta=0;
+ document.querySelectorAll("#spaces .sp").forEach(s=>{
+  const l=toM(n(s.querySelector(".l").value)),w=toM(n(s.querySelector(".w").value)),h=toM(n(s.querySelector(".h").value));
+  const a=l*w,p=2*(l+w),wa=p*h;ta+=a;
+  s.querySelector(".res").textContent=a?`المساحة: ${a.toFixed(2)} م² | المحيط: ${p.toFixed(2)} م`+(h?` | مساحة الجدران: ${wa.toFixed(2)} م²`:""):"";
+ });
+ $("tot").textContent=ta?`إجمالي المساحة: ${ta.toFixed(2)} م²`:"";
+}
+$("unit").onchange=calc;$("addSp").onclick=()=>addSpace();
+
+/* ===== signature ===== */
+const cv=$("sig"),cx=cv.getContext("2d");let drawing=false,hasSig=false;
+function fit(keep){const r=cv.getBoundingClientRect(),img=keep&&hasSig?cv.toDataURL():null;cv.width=r.width*2;cv.height=r.height*2;cx.scale(2,2);cx.lineWidth=2;cx.lineCap="round";cx.strokeStyle="#111";if(img){const i=new Image();i.onload=()=>cx.drawImage(i,0,0,r.width,r.height);i.src=img}}
+function pt(e){const r=cv.getBoundingClientRect();return{x:e.clientX-r.left,y:e.clientY-r.top}}
+cv.addEventListener("pointerdown",e=>{drawing=true;hasSig=true;const p=pt(e);cx.beginPath();cx.moveTo(p.x,p.y);cv.setPointerCapture(e.pointerId)});
+cv.addEventListener("pointermove",e=>{if(!drawing)return;const p=pt(e);cx.lineTo(p.x,p.y);cx.stroke()});
+["pointerup","pointercancel"].forEach(t=>cv.addEventListener(t,()=>drawing=false));
+$("clr").onclick=()=>{cx.clearRect(0,0,cv.width,cv.height);hasSig=false};
+
+/* ===== data ===== */
+const sketch=Annot($("sketch"),null,[]);
+const F=["client","phone","ptype","date","loc","unit","notes"];
+function collect(){
+ const o={id:curId||String(Date.now()),saved:new Date().toISOString()};
+ F.forEach(k=>o[k]=$(k).value);
+ o.spaces=[...document.querySelectorAll("#spaces .sp")].map(s=>({name:s.querySelector(".nm").value,l:s.querySelector(".l").value,w:s.querySelector(".w").value,h:s.querySelector(".h").value}));
+ o.sketch=sketch.get();
+ o.photos=photos.map(p=>({src:p.src,ops:p.a.get()}));
+ o.sig=hasSig?cv.toDataURL("image/png"):"";
+ return o;
+}
+function setAll(o){
+ $("spaces").innerHTML="";(o.spaces&&o.spaces.length?o.spaces:[{}]).forEach(addSpace);
+ sketch.set(o.sketch);
+ photos.length=0;$("photos").innerHTML="";(o.photos||[]).forEach(p=>addPhoto(p.src,p.ops));
+ cx.clearRect(0,0,cv.width,cv.height);hasSig=false;
+ if(o.sig){const i=new Image();i.onload=()=>{const r=cv.getBoundingClientRect();cx.drawImage(i,0,0,r.width,r.height);hasSig=true};i.src=o.sig}
+ calc();
+}
+function fill(o){curId=o.id;F.forEach(k=>$(k).value=o[k]||"");setAll(o);window.scrollTo({top:0,behavior:"smooth"})}
+function reset(){curId=null;["client","phone","loc","notes"].forEach(k=>$(k).value="");$("date").value=new Date().toISOString().slice(0,10);setAll({})}
+function render(){
+ const a=load().sort((x,y)=>y.saved.localeCompare(x.saved));const L=$("list");
+ if(!a.length){L.innerHTML='<div class="sub">لا توجد نماذج محفوظة بعد.</div>';return}
+ L.innerHTML="";
+ a.forEach(o=>{const d=document.createElement("div");d.className="item";
+  d.innerHTML=`<div><b></b><small></small></div><div class="row" style="flex:none;flex-wrap:nowrap"><button class="sec sm op" type="button">فتح</button><button class="dg sm del" type="button">حذف</button></div>`;
+  d.querySelector("b").textContent=(o.client||"بدون اسم")+" — "+o.ptype;
+  d.querySelector("small").textContent=(o.date||"")+" • "+(o.spaces||[]).length+" مكان • "+(o.photos||[]).length+" صورة";
+  d.querySelector(".op").onclick=()=>fill(o);
+  const db=d.querySelector(".del");
+  db.onclick=()=>twoTap(db,"حذف",()=>{store(load().filter(x=>x.id!==o.id));if(curId===o.id)curId=null;render()});
+  L.appendChild(d)});
+}
+$("save").onclick=()=>{const o=collect();if(!o.client.trim()){toast("اكتب اسم العميل أولًا");return}
+ const a=load().filter(x=>x.id!==o.id);a.push(o);if(store(a)){curId=o.id;render();toast("تم الحفظ ✓")}};
+$("nw").onclick=()=>twoTap($("nw"),"نموذج جديد",reset);
+$("pr").onclick=()=>window.print();
+$("wa").onclick=()=>{const o=collect(),u=unitTxt();
+ let t=`*تأكيد مقاسات — ألوان الحياة*\nالعميل: ${o.client}\nالمشروع: ${o.ptype}\nالموقع: ${o.loc}\nالتاريخ: ${o.date}\n\n`;
+ let ta=0;o.spaces.forEach((s,i)=>{const a=toM(n(s.l))*toM(n(s.w));ta+=a;t+=`${i+1}) ${s.name||"مكان"}: ${s.l}×${s.w}${s.h?"×"+s.h:""} ${u}${a?` = ${a.toFixed(2)} م²`:""}\n`});
+ t+=`\nالإجمالي: ${ta.toFixed(2)} م²`;if(o.notes)t+=`\nملاحظات: ${o.notes}`;
+ window.open("https://wa.me/?text="+encodeURIComponent(t),"_blank")};
+
+fit(false);reset();render();
+window.addEventListener("resize",()=>fit(true));
+
+/* ===== PWA: offline + backup ===== */
+if("serviceWorker" in navigator){window.addEventListener("load",()=>{navigator.serviceWorker.register("sw.js").catch(()=>{})})}
+try{if(navigator.storage&&navigator.storage.persist)navigator.storage.persist()}catch(e){}
+$("bk").onclick=()=>{try{const b=new Blob([JSON.stringify(load())],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(b);a.download="alwan-forms-backup-"+new Date().toISOString().slice(0,10)+".json";document.body.appendChild(a);a.click();a.remove();toast("تم تجهيز النسخة الاحتياطية")}catch(e){toast("تعذّر إنشاء النسخة")}};
+$("rs").onclick=()=>$("frs").click();
+$("frs").onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const inc=JSON.parse(r.result);if(!Array.isArray(inc))throw 0;const m={};load().concat(inc).forEach(o=>{if(o&&o.id)m[o.id]=o});if(store(Object.values(m))){render();toast("تم الاسترجاع ✓")}}catch(x){toast("الملف غير صالح")}};r.readAsText(f);e.target.value=""};
+</script>
+</body>
+</html>
